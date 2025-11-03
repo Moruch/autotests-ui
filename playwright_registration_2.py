@@ -26,7 +26,9 @@ with sync_playwright() as playwright:
     # Сохраняем состояние браузера (куки и localStorage) в файл для дальнейшего использования
     context.storage_state(path="browser-state.json")
 
-with sync_playwright() as playwright:
+    # Остальной код регистрации нового пользователя без изменений
+
+    with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
         context = browser.new_context(storage_state="browser-state.json")  # Указываем файл с сохраненным состоянием
         page = context.new_page()
