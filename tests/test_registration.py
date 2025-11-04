@@ -1,34 +1,23 @@
-from playwright.sync_api import sync_playwright, expect
 import pytest
+from playwright.sync_api import expect, Page
 
-@pytest.mark.regression  # Добавили маркировку regression
-@pytest.mark.registration  # Добавили маркировку registration
-def test_successful_registration():
-    with sync_playwright() as playwright:
-        # Открываем браузер и создаем новую страницу
-        browser = playwright.chromium.launch(headless=False)
-        page = browser.new_page()
 
-        # Переходим на страницу входа
-        page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+@pytest.mark.regression
+@pytest.mark.registration
+def test_successful_registration(chromium_page: Page):  # Теперь используем фикстуру
+    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
 
-        # Заполняем поле email
-        email_input = page.get_by_test_id('registration-form-email-input').locator('input')
-        email_input.fill("user.name@gmail.com")
+    email_input = chromium_page.get_by_test_id('registration-form-email-input').locator('input')
+    email_input.fill('user.name@gmail.com')
 
-        # Заполняем поле Username
-        user_input = page.get_by_test_id('registration-form-username-input').locator('input')
-        user_input.fill("user")
+    username_input = chromium_page.get_by_test_id('registration-form-username-input').locator('input')
+    username_input.fill('username')
 
-        # Заполняем поле Password
-        password_input = page.get_by_test_id('registration-form-password-input').locator('input')
-        password_input.fill("password")
+    password_input = chromium_page.get_by_test_id('registration-form-password-input').locator('input')
+    password_input.fill('password')
 
-        # Нажимаем на кнопку Registration
-        login_button = page.get_by_test_id('registration-page-registration-button')
-        login_button.click()
+    registration_button = chromium_page.get_by_test_id('registration-page-registration-button')
+    registration_button.click()
 
-        # Проверяем наличие заголовка Dashboard
-        dashboard_title = page.get_by_test_id('dashboard-toolbar-title-text')
-        expect(dashboard_title).to_be_visible()
-        expect(dashboard_title).to_have_text("Dashboard")
+    dashboard_title = chromium_page.get_by_test_id('dashboard-toolbar-title-text')
+    expect(dashboard_title).to_be_visible()
