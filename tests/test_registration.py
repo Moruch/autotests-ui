@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright, expect
 
-def test_successful_registratio():
+def test_successful_registration():
     with sync_playwright() as playwright:
         # Открываем браузер и создаем новую страницу
         browser = playwright.chromium.launch(headless=False)
