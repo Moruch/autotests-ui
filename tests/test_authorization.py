@@ -1,5 +1,8 @@
 from playwright.sync_api import sync_playwright, expect
+import pytest
 
+@pytest.mark.regression  # Добавили маркировку regression
+@pytest.mark.authorization  # Добавили маркировку authorization
 def test_wrong_email_or_password_authorization():
     with sync_playwright() as playwright:
         # Открываем браузер и создаем новую страницу
